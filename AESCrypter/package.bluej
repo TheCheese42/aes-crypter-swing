@@ -1,21 +1,20 @@
 #BlueJ package file
-<<<<<<< HEAD
 editor.fx.0.height=1056
 editor.fx.0.width=1936
 editor.fx.0.x=-8
 editor.fx.0.y=-8
-objectbench.height=66
+objectbench.height=138
 objectbench.width=1896
 package.divider.horizontal=0.6
-package.divider.vertical=0.9236401673640168
-package.editor.height=876
-package.editor.width=1806
+package.divider.vertical=0.8483263598326359
+package.editor.height=804
+package.editor.width=1785
 package.editor.x=0
 package.editor.y=0
 package.frame.height=1056
 package.frame.width=1936
 package.numDependencies=0
-package.numTargets=2
+package.numTargets=3
 package.showExtends=true
 package.showUses=true
 project.charset=UTF-8
@@ -32,13 +31,16 @@ target1.width=120
 target1.x=820
 target1.y=130
 target2.height=70
-target2.name=AesLib
+target2.name=MainWindow
 target2.showInterface=false
 target2.type=ClassTarget
 target2.width=120
-target2.x=426
-target2.y=230
-=======
-#Tue May 26 11:05:16 CEST 2026
-project.charset=UTF-8
->>>>>>> bbe1a8a6faa877252334d11d8bcca1cab4d83f2e
+target2.x=70
+target2.y=10
+target3.height=70
+target3.name=AesLib
+target3.showInterface=false
+target3.type=ClassTarget
+target3.width=120
+target3.x=426
+target3.y=230
