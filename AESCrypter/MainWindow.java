@@ -3,23 +3,30 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
+import java.util.Random;
 
 public class MainWindow extends JFrame {
-    JPanel panel;
-    JTable messageTable;
-    JTable keyTable;
-    JTable encryptedTable;
-    JTextField messageText;
-    JButton randomKeyButton;
-    JTextField encryptedText;
-    JButton encryptButton;
-    JButton explainButton;
-    JButton decryptButton;
+    private JPanel panel;
+    private JTable messageTable;
+    private JTable keyTable;
+    private JTable encryptedTable;
+    private JButton encryptButton;
+    private JButton analyseButton;
+    private JButton decryptButton;
+    private JTextField messageField;
+    private JButton generateButton;
+    private JTextField encryptedField;
 
-    public void main() {
+    private Random random = new Random();
+
+    private byte[] key;
+
+    void main() {
     }
 
     public MainWindow() {
+        key = new byte[16];
+
         setupUi();
     }
 
@@ -28,8 +35,32 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel);
         pack();
-        setSize(1000, 800);
         setVisible(true);
+
+        messageField.addActionListener(_event -> updateTable(messageTable, messageField.getText()));
+        generateButton.addActionListener(_event -> generateKey());
+    }
+
+    // Returns true if updating succeeded and false otherwise (e.g. too many characters)
+    private boolean updateTable(JTable table, String textContent) {
+        if (textContent.length() > 16) return false;
+        byte[] byteContent = new byte[16];
+        for (int i = 0; i < textContent.length(); i++) {
+            if ((int) textContent.charAt(i) > 255) return false;
+            byteContent[i] = (byte) textContent.charAt(i);
+        }
+        return updateTable(table, byteContent);
+    }
+
+    private boolean updateTable(JTable table, byte[] byteContent) {
+        if (byteContent.length > 16) return false;
+        // ... (make sure to add 128 to the bytes!)
+        return true;
+    }
+
+    private void generateKey() {
+        random.nextBytes(key);
+        updateTable(keyTable, key);
     }
 
     {
@@ -49,6 +80,8 @@ public class MainWindow extends JFrame {
     private void $$$setupUI$$$() {
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
+        panel.setMinimumSize(new Dimension(1000, 450));
+        panel.setPreferredSize(new Dimension(1000, 450));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, -1, 36, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
@@ -58,68 +91,79 @@ public class MainWindow extends JFrame {
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
         panel.add(panel1, BorderLayout.CENTER);
-        messageTable = new JTable();
-        GridBagConstraints gbc;
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        panel1.add(messageTable, gbc);
-        keyTable = new JTable();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        panel1.add(keyTable, gbc);
-        encryptedTable = new JTable();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        panel1.add(encryptedTable, gbc);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new BorderLayout(0, 0));
+        GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridx = 1;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel2, gbc);
-        final JLabel label2 = new JLabel();
-        label2.setText("Message:");
-        panel2.add(label2, BorderLayout.WEST);
-        messageText = new JTextField();
-        messageText.setText("");
-        panel2.add(messageText, BorderLayout.CENTER);
+        messageTable = new JTable();
+        panel2.add(messageTable, BorderLayout.CENTER);
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new BorderLayout(0, 0));
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridx = 3;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel3, gbc);
-        final JLabel label3 = new JLabel();
-        label3.setText("Key:");
-        panel3.add(label3, BorderLayout.WEST);
-        randomKeyButton = new JButton();
-        randomKeyButton.setText("Random");
-        panel3.add(randomKeyButton, BorderLayout.CENTER);
+        keyTable = new JTable();
+        panel3.add(keyTable, BorderLayout.CENTER);
+        final JPanel spacer1 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel1.add(spacer1, gbc);
+        final JPanel spacer2 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.weightx = 2.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(spacer2, gbc);
+        final JPanel spacer3 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 4;
+        gbc.weightx = 2.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(spacer3, gbc);
+        final JPanel spacer4 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.ipady = 20;
+        panel1.add(spacer4, gbc);
+        final JPanel spacer5 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panel1.add(spacer5, gbc);
+        final JPanel spacer6 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 7;
+        gbc.gridy = 4;
+        gbc.weightx = 2.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(spacer6, gbc);
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new BorderLayout(0, 0));
         gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 0;
+        gbc.gridx = 7;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel4, gbc);
-        final JLabel label4 = new JLabel();
-        label4.setText("Encrypted:");
-        panel4.add(label4, BorderLayout.WEST);
-        encryptedText = new JTextField();
-        panel4.add(encryptedText, BorderLayout.CENTER);
+        encryptedTable = new JTable();
+        panel4.add(encryptedTable, BorderLayout.CENTER);
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 1;
+        gbc.gridx = 5;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel5, gbc);
         encryptButton = new JButton();
         encryptButton.setText("Encrypt");
@@ -128,20 +172,14 @@ public class MainWindow extends JFrame {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel5.add(encryptButton, gbc);
-        explainButton = new JButton();
-        explainButton.setText("Explain");
+        analyseButton = new JButton();
+        analyseButton.setEnabled(false);
+        analyseButton.setText("Analyse");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel5.add(explainButton, gbc);
-        final JLabel label5 = new JLabel();
-        label5.setHorizontalAlignment(0);
-        label5.setText("↔");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panel5.add(label5, gbc);
+        panel5.add(analyseButton, gbc);
         decryptButton = new JButton();
         decryptButton.setText("Decrypt");
         gbc = new GridBagConstraints();
@@ -149,6 +187,109 @@ public class MainWindow extends JFrame {
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel5.add(decryptButton, gbc);
+        final JPanel panel6 = new JPanel();
+        panel6.setLayout(new BorderLayout(0, 0));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel5.add(panel6, gbc);
+        final JLabel label2 = new JLabel();
+        Font label2Font = this.$$$getFont$$$(null, -1, 26, label2.getFont());
+        if (label2Font != null) label2.setFont(label2Font);
+        label2.setHorizontalAlignment(0);
+        label2.setText("↔");
+        panel6.add(label2, BorderLayout.CENTER);
+        final JPanel spacer7 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 6;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(spacer7, gbc);
+        final JPanel spacer8 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 4;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(spacer8, gbc);
+        final JPanel spacer9 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(spacer9, gbc);
+        final JPanel spacer10 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 8;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel1.add(spacer10, gbc);
+        final JPanel panel7 = new JPanel();
+        panel7.setLayout(new BorderLayout(0, 0));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel1.add(panel7, gbc);
+        final JLabel label3 = new JLabel();
+        label3.setText("Message: ");
+        panel7.add(label3, BorderLayout.WEST);
+        messageField = new JTextField();
+        panel7.add(messageField, BorderLayout.CENTER);
+        final JPanel panel8 = new JPanel();
+        panel8.setLayout(new BorderLayout(0, 0));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel1.add(panel8, gbc);
+        final JLabel label4 = new JLabel();
+        label4.setText("Key: ");
+        panel8.add(label4, BorderLayout.WEST);
+        generateButton = new JButton();
+        generateButton.setText("Generate");
+        panel8.add(generateButton, BorderLayout.CENTER);
+        final JPanel panel9 = new JPanel();
+        panel9.setLayout(new BorderLayout(0, 0));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 7;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel1.add(panel9, gbc);
+        final JLabel label5 = new JLabel();
+        label5.setText("Encrypted: ");
+        panel9.add(label5, BorderLayout.WEST);
+        encryptedField = new JTextField();
+        panel9.add(encryptedField, BorderLayout.CENTER);
+        final JPanel spacer11 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel1.add(spacer11, gbc);
+        final JPanel spacer12 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel1.add(spacer12, gbc);
+        final JPanel panel10 = new JPanel();
+        panel10.setLayout(new GridBagLayout());
+        panel.add(panel10, BorderLayout.SOUTH);
+        final JLabel label6 = new JLabel();
+        Font label6Font = this.$$$getFont$$$(null, -1, 16, label6.getFont());
+        if (label6Font != null) label6.setFont(label6Font);
+        label6.setText("To enable the step-by-step explanation, only use up to 16 ASCII characters.");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panel10.add(label6, gbc);
+        final JPanel spacer13 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel10.add(spacer13, gbc);
     }
 
     /**
