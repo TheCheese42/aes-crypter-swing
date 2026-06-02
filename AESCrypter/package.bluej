@@ -1,4 +1,5 @@
 #BlueJ package file
+<<<<<<< HEAD
 editor.fx.0.height=1056
 editor.fx.0.width=1936
 editor.fx.0.x=-8
@@ -37,3 +38,7 @@ target2.type=ClassTarget
 target2.width=120
 target2.x=426
 target2.y=230
+=======
+#Tue May 26 11:05:16 CEST 2026
+project.charset=UTF-8
+>>>>>>> bbe1a8a6faa877252334d11d8bcca1cab4d83f2e
