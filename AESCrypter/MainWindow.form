@@ -50,7 +50,7 @@
           <vspacer id="c712">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
             </constraints>
           </vspacer>
           <hspacer id="dee36">
@@ -118,19 +118,19 @@
           <hspacer id="ac80c">
             <constraints>
               <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
+              <gridbag top="0" left="10" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
             </constraints>
           </hspacer>
           <hspacer id="27258">
             <constraints>
               <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
+              <gridbag top="0" left="10" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
             </constraints>
           </hspacer>
           <hspacer id="cc2ce">
             <constraints>
               <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
+              <gridbag top="0" left="10" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
             </constraints>
           </hspacer>
           <hspacer id="a697a">
@@ -210,7 +210,7 @@
           <vspacer id="a8621">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
+              <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
             </constraints>
           </vspacer>
           <grid id="75109" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -220,7 +220,14 @@
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="ab55b" class="HexGrid" binding="messageTable" custom-create="true">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <font size="36"/>
+                </properties>
+              </component>
+            </children>
           </grid>
           <grid id="8e14d" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
@@ -229,7 +236,15 @@
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="3abad" class="HexGrid" binding="keyTable" custom-create="true">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <fillsViewportHeight value="true"/>
+                  <font size="36"/>
+                </properties>
+              </component>
+            </children>
           </grid>
           <grid id="ecc18" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
@@ -238,7 +253,14 @@
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="ab106" class="HexGrid" binding="encryptedTable" custom-create="true">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <font size="36"/>
+                </properties>
+              </component>
+            </children>
           </grid>
         </children>
       </grid>
