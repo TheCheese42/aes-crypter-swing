@@ -1,7 +1,7 @@
 public class AesLib
 {
     
-String[][] sBox = new String[][] {
+static String[][] sBox = new String[][] {
 {"63", "7c", "77", "7b", "f2", "6b", "6f", "c5", "30", "01", "67", "2b", "fe", "d7", "ab", "76"},
 {"ca", "82", "c9", "7d", "fa", "59", "47", "f0", "ad", "d4", "a2", "af", "9c", "a4", "72", "c0"},
 {"b7", "fd", "93", "26", "36", "3f", "f7", "cc", "34", "a5", "e5", "f1", "71", "d8", "31", "15"},
@@ -20,18 +20,89 @@ String[][] sBox = new String[][] {
 {"8c", "a1", "89", "0d", "bf", "e6", "42", "68", "41", "99", "2d", "0f", "b0", "54", "bb", "16"},
 };
 
-int[][] rcon = new int[][] {
+static int[][] rcon = new int[][] {
 {2,4,8,16,32,64,128,27,54},
 {00,00,00,00,00,00,00,00,00},
 {00,00,00,00,00,00,00,00,00},
 {00,00,00,00,00,00,00,00,00},
 };
 
-int[][] GaloisField = new int[][] {
+static int[][] GaloisField = new int[][] {
 {02,03,01,01},
 {01,02,03,01},
 {01,01,02,03},
 {03,01,01,02},
 };
 
+public static String getSboxValues(String hexIn){
+    int x = Integer.parseInt(hexIn.substring(0,1), 16);
+    int y = Integer.parseInt(hexIn.substring(1,2), 16);
+    return sBox[x][y];
+}
+
+public static String[] rotWord(String[] arrayIn, int times){
+    if(times == 0){
+        return arrayIn;
+    }
+    return rotWord(new String[] {arrayIn[1], arrayIn[2], arrayIn[3], arrayIn[0]}, times-1);
+}
+
+public static String[][] generateRoundKeys(){
+    //gehirnfick
+    return new String[0][0];
+}
+
+public static String[][] shiftRows(String[][] matrixIn){
+    for (int i = 0; i < matrixIn.length; i++) matrixIn[i] = matrixIn[i].clone();
+    for (int i = 0; i<4;i++) {
+        String[] row = matrixIn[i];
+        row = rotWord(row, i);
+        matrixIn[i] = row;
+    }
+    return matrixIn;
+}
+
+public static String[][] mixColumns(String[][] matrixIn){
+for (int i = 0; i < matrixIn.length; i++) matrixIn[i] = matrixIn[i].clone();
+for (int i = 0; i<4;i++){
+    int[] column = {Integer.parseInt(matrixIn[0][i], 16),Integer.parseInt(matrixIn[1][i], 16),Integer.parseInt(matrixIn[2][i], 16),Integer.parseInt(matrixIn[3][i], 16)};
+    column = magicThingThatIDontUnderstandAnymore(column);
+    matrixIn[0][i] = String.format("%02x",column[0]);
+    matrixIn[1][i] = String.format("%02x",column[1]);
+    matrixIn[2][i] = String.format("%02x",column[2]);
+    matrixIn[3][i] = String.format("%02x",column[3]);
+}
+return matrixIn;
+}
+
+public static int[] magicThingThatIDontUnderstandAnymore(int[] c) {
+        // I forgot how this works but just input a matrix column, trust me it works
+        // - Dominik
+        return new int[]{
+            2 * c[0] ^ (c[0] > 127 ? 283 : 0) ^ 2 * c[1] ^ (c[1] > 127 ? 283 : 0) ^ c[1] ^ 1 * c[2] ^ 1 * c[3],
+            1 * c[0] ^ 2 * c[1] ^ (c[1] > 127 ? 283 : 0) ^ 2 * c[2] ^ (c[2] > 127 ? 283 : 0) ^ c[2] ^ 1 * c[3],
+            1 * c[0] ^ 1 * c[1] ^ 2 * c[2] ^ (c[2] > 127 ? 283 : 0) ^ 2 * c[3] ^ (c[3] > 127 ? 283 : 0) ^ c[3],
+            2 * c[0] ^ (c[0] > 127 ? 283 : 0) ^ c[0] ^ 1 * c[1] ^ 1 * c[2] ^ 2 * c[3] ^ (c[3] > 127 ? 283 : 0),
+        };
+    
+}
+
+public static String[][] addRoundKey(String[][] matrixIn, String[][] roundKey){
+    for (int i = 0; i < matrixIn.length; i++) matrixIn[i] = matrixIn[i].clone();
+    for (int i=0;i<4;i++){
+        int[] columnMatrix = {Integer.parseInt(matrixIn[0][i],16),
+        Integer.parseInt(matrixIn[1][i],16),
+        Integer.parseInt(matrixIn[2][i],16),
+        Integer.parseInt(matrixIn[3][i],16)};
+        int[] columnKey = {Integer.parseInt(roundKey[0][i],16),
+        Integer.parseInt(roundKey[1][i],16),
+        Integer.parseInt(roundKey[2][i],16),
+        Integer.parseInt(roundKey[3][i],16)};
+        matrixIn[0][i] = String.format("%02x",(columnMatrix[0] ^ columnKey[0]) % 256);
+        matrixIn[1][i] = String.format("%02x",(columnMatrix[1] ^ columnKey[1]) % 256);
+        matrixIn[2][i] = String.format("%02x",(columnMatrix[2] ^ columnKey[2]) % 256);
+        matrixIn[3][i] = String.format("%02x",(columnMatrix[3] ^ columnKey[3]) % 256);
+    }
+    return matrixIn;
+}
 }
