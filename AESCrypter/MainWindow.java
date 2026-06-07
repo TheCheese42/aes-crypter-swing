@@ -1,8 +1,5 @@
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
-import java.awt.*;
-import java.util.Locale;
+import javax.swing.table.DefaultTableModel;
 import java.util.Random;
 
 public class MainWindow extends JFrame {
@@ -17,17 +14,15 @@ public class MainWindow extends JFrame {
     private HexGrid keyTable;
     private HexGrid encryptedTable;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
-    private byte[] key;
+    private final byte[] key;
 
     void main() {
     }
 
     public MainWindow() {
         key = new byte[16];
-
-        //$$$setupUI$$$();
         setupUi();
     }
 
@@ -55,11 +50,11 @@ public class MainWindow extends JFrame {
 
     private boolean updateTable(HexGrid table, byte[] byteContent) {
         if (byteContent.length > 16) return false;
-        table.setData(new byte[][] {
-            {byteContent[0], byteContent[1], byteContent[2], byteContent[3]},
-            {byteContent[4], byteContent[5], byteContent[6], byteContent[7]},
-            {byteContent[8], byteContent[9], byteContent[10], byteContent[11]},
-            {byteContent[12], byteContent[13], byteContent[14], byteContent[15]},
+        table.setData(new byte[][]{
+                {byteContent[0], byteContent[1], byteContent[2], byteContent[3]},
+                {byteContent[4], byteContent[5], byteContent[6], byteContent[7]},
+                {byteContent[8], byteContent[9], byteContent[10], byteContent[11]},
+                {byteContent[12], byteContent[13], byteContent[14], byteContent[15]},
         });
         return true;
     }
@@ -70,15 +65,8 @@ public class MainWindow extends JFrame {
     }
 
     private void createUIComponents() {
-        Object[][] initData = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        String[] columnNames = {"", "", "", ""};
-        messageTable = new HexGrid(initData, columnNames);
-        keyTable = new HexGrid(initData, columnNames);
-        encryptedTable = new HexGrid(initData, columnNames);
+        messageTable = new HexGrid();
+        keyTable = new HexGrid();
+        encryptedTable = new HexGrid();
     }
 }

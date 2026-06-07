@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ComponentEvent;
 
 public class HexGrid extends JTable implements TableModelListener {
@@ -17,8 +18,11 @@ public class HexGrid extends JTable implements TableModelListener {
         setRowHeight(getHeight());
     }
 
-    public HexGrid(Object[][] rowData, Object[] columnNames) {
-        super(rowData, columnNames);
+    public HexGrid() {
+        super(
+            new DefaultTableModel(new Object[][] { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} },
+            new String[] {"", "", "", ""})
+        );
 
         addComponentListener(new HexGridComponentListener(this));
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -37,15 +41,15 @@ public class HexGrid extends JTable implements TableModelListener {
         updateUi();
     }
     
-    public byte getCell(int x, int y) {
-        return data[y][x];
+    public byte[][] getData() {
+        return data;
     }
     
     private void updateUi() {
         changeIsInternal = true;
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
-                dataModel.setValueAt(Integer.toHexString(Math.floorMod((int) data[y][x], 256)), y, x);
+                dataModel.setValueAt(String.format("%02x", Math.floorMod((int) data[y][x], 256)), y, x);
             }
         }
         changeIsInternal = false;
@@ -54,10 +58,17 @@ public class HexGrid extends JTable implements TableModelListener {
     public void tableChanged(TableModelEvent event) {
         super.tableChanged(event);
         if (!initialized || changeIsInternal) return;
+        changeIsInternal = true;
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
-                data[y][x] = (byte) Long.parseLong(dataModel.getValueAt(y, x).toString());
+                try {
+                    data[y][x] = (byte) Long.parseLong(dataModel.getValueAt(y, x).toString(), 16);
+                    dataModel.setValueAt(String.format("%02x", Math.floorMod((int) data[y][x], 256)), y, x);
+                } catch (NumberFormatException | StackOverflowError _e) {
+                    dataModel.setValueAt(String.format("%02x", data[y][x]), y, x);
+                }
             }
         }
+        changeIsInternal = false;
     }
 }
