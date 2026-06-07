@@ -20,11 +20,12 @@ static String[][] sBox = new String[][] {
 {"8c", "a1", "89", "0d", "bf", "e6", "42", "68", "41", "99", "2d", "0f", "b0", "54", "bb", "16"},
 };
 
-static int[][] rcon = new int[][] {
-{2,4,8,16,32,64,128,27,54},
-{00,00,00,00,00,00,00,00,00},
-{00,00,00,00,00,00,00,00,00},
-{00,00,00,00,00,00,00,00,00},
+static int[][] rcon = new int[][] 
+{
+{1,2,4,8,16,32,64,128,27,54},
+{00,00,00,00,00,00,00,00,00,00},
+{00,00,00,00,00,00,00,00,00,00},
+{00,00,00,00,00,00,00,00,00,00}
 };
 
 static int[][] GaloisField = new int[][] {
@@ -47,9 +48,121 @@ public static String[] rotWord(String[] arrayIn, int times){
     return rotWord(new String[] {arrayIn[1], arrayIn[2], arrayIn[3], arrayIn[0]}, times-1);
 }
 
-public static String[][] generateRoundKeys(){
-    //gehirnfick
-    return new String[0][0];
+public static String[][] generateRoundKey(String[][] Key, int round){
+    String[] column1 = 
+    {
+        Key[0][0],
+        Key[1][0],
+        Key[2][0],
+        Key[3][0],
+    };
+    String[] column2 = 
+    {
+        Key[0][1],
+        Key[1][1],
+        Key[2][1],
+        Key[3][1],
+    };
+    String[] column3 = 
+    {
+        Key[0][2],
+        Key[1][2],
+        Key[2][2],
+        Key[3][2],
+    };
+    String[] column4 = 
+    {
+        Key[0][3],
+        Key[1][3],
+        Key[2][3],
+        Key[3][3],
+    };
+    
+    String[] oldColumn4 = new String[4];
+    oldColumn4 = column4;
+    int[] oldColumn4Int = 
+    {
+        Integer.parseInt(oldColumn4[0],16),
+        Integer.parseInt(oldColumn4[1],16),
+        Integer.parseInt(oldColumn4[2],16),
+        Integer.parseInt(oldColumn4[3],16)
+    };
+    column4 = rotWord(column4,1);
+    column4[0] = getSboxValues(column4[0]);
+    column4[1] = getSboxValues(column4[1]);
+    column4[2] = getSboxValues(column4[2]);
+    column4[3] = getSboxValues(column4[3]);
+    
+    int[] column1int = 
+    {
+        Integer.parseInt(column1[0],16),
+        Integer.parseInt(column1[1],16),
+        Integer.parseInt(column1[2],16),
+        Integer.parseInt(column1[3],16)
+    };
+    int[] column2int = 
+    {
+        Integer.parseInt(column2[0],16),
+        Integer.parseInt(column2[1],16),
+        Integer.parseInt(column2[2],16),
+        Integer.parseInt(column2[3],16)
+    };
+    int[] column3int = 
+    {
+        Integer.parseInt(column3[0],16),
+        Integer.parseInt(column3[1],16),
+        Integer.parseInt(column3[2],16),
+        Integer.parseInt(column3[3],16)
+    };
+    int[] column4int = 
+    {
+        Integer.parseInt(column4[0],16),
+        Integer.parseInt(column4[1],16),
+        Integer.parseInt(column4[2],16),
+        Integer.parseInt(column4[3],16)
+    };
+    int[] newColumn1Int = column4int;
+    int[] newColumn2Int= new int[4];
+    int[] newColumn3Int= new int[4];
+    int[] newColumn4Int= new int[4];
+    for(int i=0;i<4;i++)
+    {
+        newColumn1Int[i] = (column4int[i] ^ column1int[i] ^ rcon[i][round]);
+        //System.out.println(column4int[i] + " " + column1int[i] + " " + rcon[round][i]); test
+    }
+    
+    String[] newColumn1 = new String[4];
+    String[] newColumn2 = new String[4];
+    String[] newColumn3 = new String[4];
+    String[] newColumn4 = new String[4];
+    
+    for(int i=0;i<4;i++){
+        newColumn2Int[i] = (column2int[i] ^ newColumn1Int[i]);
+        //System.out.println(column2int[i]+ " " + newColumn1Int[i]); test
+    }
+    for(int i=0;i<4;i++){
+        newColumn3Int[i] = (column3int[i] ^ newColumn2Int[i]);
+    }
+    for(int i=0;i<4;i++){
+        newColumn4Int[i] = (oldColumn4Int[i] ^ newColumn3Int[i]);
+    }
+    for(int i=0;i<4;i++){
+        newColumn1[i] = String.format("%02x",newColumn1Int[i]);
+        newColumn2[i] = String.format("%02x",newColumn2Int[i]);
+        newColumn3[i] = String.format("%02x",newColumn3Int[i]);
+        newColumn4[i] = String.format("%02x",newColumn4Int[i]);
+    }
+    
+    String[][] roundKey =
+    {
+        {newColumn1[0],newColumn2[0],newColumn3[0],newColumn4[0]},
+        {newColumn1[1],newColumn2[1],newColumn3[1],newColumn4[1]},
+        {newColumn1[2],newColumn2[2],newColumn3[2],newColumn4[2]},
+        {newColumn1[3],newColumn2[3],newColumn3[3],newColumn4[3]}
+    };
+    
+    return roundKey;
+  
 }
 
 public static String[][] shiftRows(String[][] matrixIn){
@@ -63,7 +176,6 @@ public static String[][] shiftRows(String[][] matrixIn){
 }
 
 public static String[][] mixColumns(String[][] matrixIn){
-for (int i = 0; i < matrixIn.length; i++) matrixIn[i] = matrixIn[i].clone();
 for (int i = 0; i<4;i++){
     int[] column = {Integer.parseInt(matrixIn[0][i], 16),Integer.parseInt(matrixIn[1][i], 16),Integer.parseInt(matrixIn[2][i], 16),Integer.parseInt(matrixIn[3][i], 16)};
     column = magicThingThatIDontUnderstandAnymore(column);
@@ -88,7 +200,6 @@ public static int[] magicThingThatIDontUnderstandAnymore(int[] c) {
 }
 
 public static String[][] addRoundKey(String[][] matrixIn, String[][] roundKey){
-    for (int i = 0; i < matrixIn.length; i++) matrixIn[i] = matrixIn[i].clone();
     for (int i=0;i<4;i++){
         int[] columnMatrix = {Integer.parseInt(matrixIn[0][i],16),
         Integer.parseInt(matrixIn[1][i],16),
@@ -104,5 +215,50 @@ public static String[][] addRoundKey(String[][] matrixIn, String[][] roundKey){
         matrixIn[3][i] = String.format("%02x",(columnMatrix[3] ^ columnKey[3]) % 256);
     }
     return matrixIn;
+}
+public static String[][] Encrypt(String[][] Message, String[][] Key){
+    Message = addRoundKey(Message, Key);
+    //System.out.println("Initial Round: ");  test
+    //AesTest.PrintStringMatrix(Message);
+    for(int i=0;i<9;i++){
+       Key = generateRoundKey(Key,i);
+       //System.out.println("Key Round: "+ i); test
+       //AesTest.PrintStringMatrix(Key);
+       for(int j=0; j<4;j++){
+           Message[j][0] = getSboxValues(Message[j][0]); 
+           Message[j][1] = getSboxValues(Message[j][1]);
+           Message[j][2] = getSboxValues(Message[j][2]);
+           Message[j][3] = getSboxValues(Message[j][3]);
+       }
+       //System.out.println("Subbytes Round: "+ i); test
+       //AesTest.PrintStringMatrix(Message);
+       Message = shiftRows(Message);
+       //System.out.println("shiftRows Round: "+ i); test
+       //AesTest.PrintStringMatrix(Message);
+       Message = mixColumns(Message);
+       //System.out.println("mixColumns Round: "+ i); test
+       //AesTest.PrintStringMatrix(Message);
+       Message = addRoundKey(Message,Key);
+       //System.out.println("addRoundKey Round: "+ i); test
+       //AesTest.PrintStringMatrix(Message);
+    }
+    for(int k=0; k<4;k++){
+           Message[0][k] = getSboxValues(Message[0][k]); 
+           Message[1][k] = getSboxValues(Message[1][k]);
+           Message[2][k] = getSboxValues(Message[2][k]);
+           Message[3][k] = getSboxValues(Message[3][k]);
+       }
+    //System.out.println("Subbytes Round: 10"); test
+    //AesTest.PrintStringMatrix(Message);
+    Key = generateRoundKey(Key,9);
+    //System.out.println("Key Round: 10"); test
+    //AesTest.PrintStringMatrix(Message);
+    Message = shiftRows(Message);
+    //System.out.println("shiftRows Round: 10"); test
+    //AesTest.PrintStringMatrix(Message);
+    Message = addRoundKey(Message,Key);
+    //System.out.println("addRoundKey Round: 10"); test
+    //AesTest.PrintStringMatrix(Message);
+    return Message;
 }
 }
