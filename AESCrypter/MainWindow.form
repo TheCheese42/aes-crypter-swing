@@ -15,7 +15,7 @@
         <properties>
           <font size="36"/>
           <horizontalAlignment value="0"/>
-          <text value="AES Crypter"/>
+          <text value="Rijndael Encryptor"/>
         </properties>
       </component>
       <grid id="f7599" layout-manager="GridBagLayout">
@@ -78,7 +78,7 @@
               </component>
               <component id="aa6b7" class="javax.swing.JButton" binding="analyseButton" default-binding="true">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
@@ -86,29 +86,20 @@
                   <text value="Analyse"/>
                 </properties>
               </component>
-              <component id="177dc" class="javax.swing.JButton" binding="decryptButton" default-binding="true">
+              <grid id="4dbb5" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <text value="Decrypt"/>
-                </properties>
-              </component>
-              <grid id="780d8" layout-manager="BorderLayout" hgap="0" vgap="0">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="ea2a6" class="javax.swing.JLabel">
+                  <component id="2fbe2" class="javax.swing.JLabel">
                     <constraints border-constraint="Center"/>
                     <properties>
                       <font size="26"/>
                       <horizontalAlignment value="0"/>
-                      <text value="↔"/>
+                      <text value="→"/>
                     </properties>
                   </component>
                 </children>
@@ -262,29 +253,6 @@
               </component>
             </children>
           </grid>
-        </children>
-      </grid>
-      <grid id="8158e" layout-manager="GridBagLayout">
-        <constraints border-constraint="South"/>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="85f2" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <font size="16"/>
-              <text value="To enable the step-by-step explanation, only use up to 16 ASCII characters."/>
-            </properties>
-          </component>
-          <vspacer id="68eea">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-          </vspacer>
         </children>
       </grid>
     </children>
