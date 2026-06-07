@@ -1,9 +1,8 @@
-public class AesTest
-{
-     public AesTest(){
-         System.out.print('\u000c');
+public class AesTest {
+    public AesTest() {
+        System.out.print('\u000c');
         //System.out.print(AesLib.getSboxValues("19"));             success
-        
+
         //PrintStringMatrix(AesLib.shiftRows(                       success
         //new String[][]
         //{
@@ -40,28 +39,29 @@ public class AesTest
         //    {"fe","2c","39","76"},
         //    {"17","b1","39","05"},
         //},1));
-        
+
         PrintStringMatrix(AesLib.Encrypt(new String[][]
-        {
-        {"32","88","31","e0"},
-        {"43","5a","31","37"},
-        {"f6","30","98","07"},
-        {"a8","8d","a2","34"}
-        },
-        new String[][] 
-        {
-        {"2b","28","ab","09"},
-        {"7e","ae","f7","cf"},
-        {"15","d2","15","4f"},
-        {"16","a6","88","3c"}
-        }));
-     }
-     public static void PrintStringMatrix(String[][] StringIn){
-         for(int i = 0;i<StringIn.length;i++){
-             for(int j = 0; j<StringIn[i].length;j++){
-                 System.out.print(StringIn[i][j]+",");
-                }
-             System.out.println();
-         }
+                {
+                    {"32", "88", "31", "e0"},
+                    {"43", "5a", "31", "37"},
+                    {"f6", "30", "98", "07"},
+                    {"a8", "8d", "a2", "34"}
+                },
+            new String[][]
+                {
+                    {"2b", "28", "ab", "09"},
+                    {"7e", "ae", "f7", "cf"},
+                    {"15", "d2", "15", "4f"},
+                    {"16", "a6", "88", "3c"}
+                }));
+    }
+
+    public static void PrintStringMatrix(String[][] StringIn) {
+        for (int i = 0; i < StringIn.length; i++) {
+            for (int j = 0; j < StringIn[i].length; j++) {
+                System.out.print(StringIn[i][j] + ",");
+            }
+            System.out.println();
         }
+    }
 }
