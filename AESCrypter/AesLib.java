@@ -25,24 +25,24 @@ public class AesLib {
         {00, 00, 00, 00, 00, 00, 00, 00, 00, 00},
     };
 
-    static int[][] GALOIS_FIELD = new int[][]{
+    static byte[][] GALOIS_FIELD = new byte[][]{
         {02, 03, 01, 01},
         {01, 02, 03, 01},
         {01, 01, 02, 03},
         {03, 01, 01, 02},
     };
 
-    private static String getSBoxValues(String hex) {
-        int x = Integer.parseInt(hex.substring(0, 1), 16);
-        int y = Integer.parseInt(hex.substring(1, 2), 16);
-        return SBOX[x][y];
+    private static byte getSBoxValue(byte hex) {
+        int x = Math.floorMod(hex >> 4, 16);
+        int y = hex & 15;
+        return (byte) Integer.parseInt(SBOX[x][y], 16);
     }
 
-    private static String[] rotWord(String[] arr, int times) {
+    private static byte[] rotWord(byte[] arr, int times) {
         if (times == 0) {
             return arr;
         }
-        return rotWord(new String[]{arr[1], arr[2], arr[3], arr[0]}, times - 1);
+        return rotWord(new byte[]{arr[1], arr[2], arr[3], arr[0]}, times - 1);
     }
 
     private static int[] magicThingThatIDontUnderstandAnymore(int[] c) {
@@ -57,164 +57,120 @@ public class AesLib {
         };
     }
 
-    public static void subBytes(String[][] matrix) {
+    public static void subBytes(byte[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = getSBoxValues(matrix[i][j]);
+                matrix[i][j] = getSBoxValue(matrix[i][j]);
             }
         }
     }
 
-    public static void shiftRows(String[][] matrix) {
+    public static void shiftRows(byte[][] matrix) {
         for (int i = 0; i < 4; i++) {
-            String[] row = matrix[i];
+            byte[] row = matrix[i];
             matrix[i] = rotWord(row, i);
         }
     }
 
-    public static void mixColumns(String[][] matrix) {
+    public static void mixColumns(byte[][] matrix) {
         for (int i = 0; i < 4; i++) {
             int[] column = {
-                Integer.parseInt(matrix[0][i], 16),
-                Integer.parseInt(matrix[1][i], 16),
-                Integer.parseInt(matrix[2][i], 16),
-                Integer.parseInt(matrix[3][i], 16),
+                Math.floorMod(matrix[0][i], 256),
+                Math.floorMod(matrix[1][i], 256),
+                Math.floorMod(matrix[2][i], 256),
+                Math.floorMod(matrix[3][i], 256),
             };
             column = magicThingThatIDontUnderstandAnymore(column);
-            matrix[0][i] = String.format("%02x", column[0]);
-            matrix[1][i] = String.format("%02x", column[1]);
-            matrix[2][i] = String.format("%02x", column[2]);
-            matrix[3][i] = String.format("%02x", column[3]);
+            matrix[0][i] = (byte) column[0];
+            matrix[1][i] = (byte) column[1];
+            matrix[2][i] = (byte) column[2];
+            matrix[3][i] = (byte) column[3];
         }
     }
 
-    public static void addRoundKey(String[][] matrix, String[][] key) {
+    public static void addRoundKey(byte[][] matrix, byte[][] key) {
         for (int i = 0; i < 4; i++) {
             int[] columnMatrix = {
-                Integer.parseInt(matrix[0][i], 16),
-                Integer.parseInt(matrix[1][i], 16),
-                Integer.parseInt(matrix[2][i], 16),
-                Integer.parseInt(matrix[3][i], 16),
+                matrix[0][i],
+                matrix[1][i],
+                matrix[2][i],
+                matrix[3][i],
             };
             int[] columnKey = {
-                Integer.parseInt(key[0][i], 16),
-                Integer.parseInt(key[1][i], 16),
-                Integer.parseInt(key[2][i], 16),
-                Integer.parseInt(key[3][i], 16),
+                key[0][i],
+                key[1][i],
+                key[2][i],
+                key[3][i],
             };
-            matrix[0][i] = String.format("%02x", (columnMatrix[0] ^ columnKey[0]) % 256);
-            matrix[1][i] = String.format("%02x", (columnMatrix[1] ^ columnKey[1]) % 256);
-            matrix[2][i] = String.format("%02x", (columnMatrix[2] ^ columnKey[2]) % 256);
-            matrix[3][i] = String.format("%02x", (columnMatrix[3] ^ columnKey[3]) % 256);
+            matrix[0][i] = (byte) ((columnMatrix[0] ^ columnKey[0]) % 256);
+            matrix[1][i] = (byte) ((columnMatrix[1] ^ columnKey[1]) % 256);
+            matrix[2][i] = (byte) ((columnMatrix[2] ^ columnKey[2]) % 256);
+            matrix[3][i] = (byte) ((columnMatrix[3] ^ columnKey[3]) % 256);
         }
     }
 
-    public static String[][] generateRoundKey(String[][] Key, int round) {
-        String[] column1 = {
-            Key[0][0],
-            Key[1][0],
-            Key[2][0],
-            Key[3][0],
+    public static byte[][] generateRoundKey(byte[][] key, int round) {
+        byte[] column1 = {
+            key[0][0],
+            key[1][0],
+            key[2][0],
+            key[3][0],
         };
-        String[] column2 = {
-            Key[0][1],
-            Key[1][1],
-            Key[2][1],
-            Key[3][1],
+        byte[] column2 = {
+            key[0][1],
+            key[1][1],
+            key[2][1],
+            key[3][1],
         };
-        String[] column3 = {
-            Key[0][2],
-            Key[1][2],
-            Key[2][2],
-            Key[3][2],
+        byte[] column3 = {
+            key[0][2],
+            key[1][2],
+            key[2][2],
+            key[3][2],
         };
-        String[] column4 = {
-            Key[0][3],
-            Key[1][3],
-            Key[2][3],
-            Key[3][3],
+        byte[] column4 = {
+            key[0][3],
+            key[1][3],
+            key[2][3],
+            key[3][3],
         };
 
-        String[] oldColumn4 = new String[4];
-        oldColumn4 = column4;
-        int[] oldColumn4Int = {
-            Integer.parseInt(oldColumn4[0], 16),
-            Integer.parseInt(oldColumn4[1], 16),
-            Integer.parseInt(oldColumn4[2], 16),
-            Integer.parseInt(oldColumn4[3], 16),
-        };
+        byte[] oldColumn4 = column4;
         column4 = rotWord(column4, 1);
-        column4[0] = getSBoxValues(column4[0]);
-        column4[1] = getSBoxValues(column4[1]);
-        column4[2] = getSBoxValues(column4[2]);
-        column4[3] = getSBoxValues(column4[3]);
+        column4[0] = getSBoxValue(column4[0]);
+        column4[1] = getSBoxValue(column4[1]);
+        column4[2] = getSBoxValue(column4[2]);
+        column4[3] = getSBoxValue(column4[3]);
 
-        int[] column1int = {
-            Integer.parseInt(column1[0], 16),
-            Integer.parseInt(column1[1], 16),
-            Integer.parseInt(column1[2], 16),
-            Integer.parseInt(column1[3], 16),
-        };
-        int[] column2int = {
-            Integer.parseInt(column2[0], 16),
-            Integer.parseInt(column2[1], 16),
-            Integer.parseInt(column2[2], 16),
-            Integer.parseInt(column2[3], 16),
-        };
-        int[] column3int = {
-            Integer.parseInt(column3[0], 16),
-            Integer.parseInt(column3[1], 16),
-            Integer.parseInt(column3[2], 16),
-            Integer.parseInt(column3[3], 16),
-        };
-        int[] column4int = {
-            Integer.parseInt(column4[0], 16),
-            Integer.parseInt(column4[1], 16),
-            Integer.parseInt(column4[2], 16),
-            Integer.parseInt(column4[3], 16),
-        };
-        int[] newColumn1Int = column4int;
-        int[] newColumn2Int = new int[4];
-        int[] newColumn3Int = new int[4];
-        int[] newColumn4Int = new int[4];
+        byte[] newColumn1 = column4;
+        byte[] newColumn2 = new byte[4];
+        byte[] newColumn3 = new byte[4];
+        byte[] newColumn4 = new byte[4];
         for (int i = 0; i < 4; i++) {
-            newColumn1Int[i] = (column4int[i] ^ column1int[i] ^ RCON[i][round]);
-            //System.out.println(column4int[i] + " " + column1int[i] + " " + rcon[round][i]); test
+            newColumn1[i] = (byte) (column4[i] ^ column1[i] ^ RCON[i][round]);
         }
 
-        String[] newColumn1 = new String[4];
-        String[] newColumn2 = new String[4];
-        String[] newColumn3 = new String[4];
-        String[] newColumn4 = new String[4];
-
         for (int i = 0; i < 4; i++) {
-            newColumn2Int[i] = (column2int[i] ^ newColumn1Int[i]);
+            newColumn2[i] = (byte) (column2[i] ^ newColumn1[i]);
         }
         for (int i = 0; i < 4; i++) {
-            newColumn3Int[i] = (column3int[i] ^ newColumn2Int[i]);
+            newColumn3[i] = (byte) (column3[i] ^ newColumn2[i]);
         }
         for (int i = 0; i < 4; i++) {
-            newColumn4Int[i] = (oldColumn4Int[i] ^ newColumn3Int[i]);
-        }
-        for (int i = 0; i < 4; i++) {
-            newColumn1[i] = String.format("%02x", newColumn1Int[i]);
-            newColumn2[i] = String.format("%02x", newColumn2Int[i]);
-            newColumn3[i] = String.format("%02x", newColumn3Int[i]);
-            newColumn4[i] = String.format("%02x", newColumn4Int[i]);
+            newColumn4[i] = (byte) (oldColumn4[i] ^ newColumn3[i]);
         }
 
-        String[][] roundKey = {
+        byte[][] roundKey = {
             {newColumn1[0], newColumn2[0], newColumn3[0], newColumn4[0]},
             {newColumn1[1], newColumn2[1], newColumn3[1], newColumn4[1]},
             {newColumn1[2], newColumn2[2], newColumn3[2], newColumn4[2]},
             {newColumn1[3], newColumn2[3], newColumn3[3], newColumn4[3]},
         };
-
         return roundKey;
     }
 
-    public static String[][] encrypt(String[][] message, String[][] key) {
-        String[][] encrypted = new String[4][4];
+    public static byte[][] encrypt(byte[][] message, byte[][] key) {
+        byte[][] encrypted = new byte[4][4];
         for (int i = 0; i < message.length; i++) encrypted[i] = message[i].clone();
 
         addRoundKey(encrypted, key);
