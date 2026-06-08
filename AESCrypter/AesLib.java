@@ -386,16 +386,16 @@ public class AesLib {
         return encrypted;
     }
 
-    public static byte[][] decrypt(byte[][] message, byte[][] CipherKey) {
+    public static byte[][] decrypt(byte[][] message, byte[][] cipherKey) {
         byte[][] decrypted = new byte[4][4];
         for (int i = 0; i < message.length; i++) decrypted[i] = message[i].clone();
 
-        byte[][] key = CipherKey;
-        for (int j = 0; j < 10; j++) {
-            key = generateRoundKey(key, j);
+        byte[][] key = cipherKey;
+        for (int i = 0; i < 10; i++) {
+            key = generateRoundKey(key, i);
         }
         addRoundKey(decrypted, key);
-        key = CipherKey;
+        key = cipherKey;
         for (int i = 9; i > 0; i--) {
             inverseShiftRows(decrypted);
             inverseSubBytes(decrypted);
@@ -407,7 +407,7 @@ public class AesLib {
         }
         inverseShiftRows(decrypted);
         inverseSubBytes(decrypted);
-        key = generateRoundKey(CipherKey, 0);
+        key = generateRoundKey(cipherKey, 0);
         addRoundKey(decrypted, key);
 
         return decrypted;
