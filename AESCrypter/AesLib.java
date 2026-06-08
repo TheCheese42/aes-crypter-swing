@@ -395,10 +395,10 @@ public class AesLib {
             key = generateRoundKey(key, i);
         }
         addRoundKey(decrypted, key);
-        key = cipherKey;
         for (int i = 9; i > 0; i--) {
             inverseShiftRows(decrypted);
             inverseSubBytes(decrypted);
+            key = cipherKey;
             for (int j = 0; j < i; j++) {
                 key = generateRoundKey(key, j);
             }
@@ -407,8 +407,7 @@ public class AesLib {
         }
         inverseShiftRows(decrypted);
         inverseSubBytes(decrypted);
-        key = generateRoundKey(cipherKey, 0);
-        addRoundKey(decrypted, key);
+        addRoundKey(decrypted, cipherKey);
 
         return decrypted;
     }
