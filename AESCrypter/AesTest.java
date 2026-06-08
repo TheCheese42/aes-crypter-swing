@@ -6,17 +6,6 @@ public class AesTest {
 
     public AesTest() {
         System.out.print('\u000c');
-        AesLib.decrypt(s2b(new String[][]{
-            {"32", "88", "31", "e0"},
-            {"43", "5a", "31", "37"},
-            {"f6", "30", "98", "07"},
-            {"a8", "8d", "a2", "34"},
-        }), s2b(new String[][]{
-            {"2b", "28", "ab", "09"},
-            {"7e", "ae", "f7", "cf"},
-            {"15", "d2", "15", "4f"},
-            {"16", "a6", "88", "3c"},
-        }));
         byte[][] matrix;
 
         System.out.print("Testing SubBytes: ");
@@ -33,6 +22,20 @@ public class AesTest {
             {"11", "98", "5d", "52"},
             {"ae", "f1", "e5", "30"},
         })));
+        System.out.print("Inverse: ");
+        matrix = s2b(new String[][]{
+            {"d4", "e0", "b8", "1e"},
+            {"27", "bf", "b4", "41"},
+            {"11", "98", "5d", "52"},
+            {"ae", "f1", "e5", "30"},
+        });
+        AesLib.inverseSubBytes(matrix);
+        System.out.println(Arrays.deepEquals(matrix, s2b(new String[][]{
+            {"19", "a0", "9a", "e9"},
+            {"3d", "f4", "c6", "f8"},
+            {"e3", "e2", "8d", "48"},
+            {"be", "2b", "2a", "08"},
+        })));
 
         System.out.print("Testing ShiftRows: ");
         matrix = s2b(new String[][]{
@@ -48,6 +51,20 @@ public class AesTest {
             {"5d", "52", "11", "98"},
             {"30", "ae", "f1", "e5"},
         })));
+        System.out.print("Inverse: ");
+        matrix = s2b(new String[][]{
+            {"d4", "e0", "b8", "1e"},
+            {"bf", "b4", "41", "27"},
+            {"5d", "52", "11", "98"},
+            {"30", "ae", "f1", "e5"},
+        });
+        AesLib.inverseShiftRows(matrix);
+        System.out.println(Arrays.deepEquals(matrix, s2b(new String[][]{
+            {"d4", "e0", "b8", "1e"},
+            {"27", "bf", "b4", "41"},
+            {"11", "98", "5d", "52"},
+            {"ae", "f1", "e5", "30"},
+        })));
 
         System.out.print("Testing MixColumns: ");
         matrix = s2b(new String[][]{
@@ -62,6 +79,20 @@ public class AesTest {
             {"66", "cb", "f8", "06"},
             {"81", "19", "d3", "26"},
             {"e5", "9a", "7a", "4c"},
+        })));
+        System.out.print("Inverse: ");
+        matrix = s2b(new String[][]{
+            {"04", "e0", "48", "28"},
+            {"66", "cb", "f8", "06"},
+            {"81", "19", "d3", "26"},
+            {"e5", "9a", "7a", "4c"},
+        });
+        AesLib.inverseMixColumns(matrix);
+        System.out.println(Arrays.deepEquals(matrix, s2b(new String[][]{
+            {"d4", "e0", "b8", "1e"},
+            {"bf", "b4", "41", "27"},
+            {"5d", "52", "11", "98"},
+            {"30", "ae", "f1", "e5"},
         })));
 
         System.out.print("Testing AddRoundKey: ");
@@ -114,7 +145,24 @@ public class AesTest {
             {"84", "09", "85", "0b"},
             {"1d", "fb", "97", "32"},
         })));
-        
+
+        System.out.print("Testing Decrypt: ");
+        System.out.println(Arrays.deepEquals(AesLib.decrypt(s2b(new String[][]{
+            {"39", "02", "dc", "19"},
+            {"25", "dc", "11", "6a"},
+            {"84", "09", "85", "0b"},
+            {"1d", "fb", "97", "32"},
+        }), s2b(new String[][]{
+            {"2b", "28", "ab", "09"},
+            {"7e", "ae", "f7", "cf"},
+            {"15", "d2", "15", "4f"},
+            {"16", "a6", "88", "3c"},
+        })), s2b(new String[][]{
+            {"32", "88", "31", "e0"},
+            {"43", "5a", "31", "37"},
+            {"f6", "30", "98", "07"},
+            {"a8", "8d", "a2", "34"},
+        })));
     }
 
     public static byte[][] s2b(String[][] matrix) {
