@@ -16,12 +16,24 @@ public class AnalyseDialog extends JFrame {
     private JTextPane toAddTheCipherTextPane;
     private HexGrid encryption0ResultMessageGrid;
     private JTextPane thisIsOurMessageTextPane;
+    private JTabbedPane round1TabbedPane;
+    private JTextPane whileNotOurOriginalTextPane;
+    private JTextPane weWonTBeTextPane;
+    private JTable table1;
+    private JTextPane toPerformTheSubBytesTextPane;
 
-    public AnalyseDialog() {
+    byte[][] message;
+    byte[][] key;
+
+    public AnalyseDialog(byte[][] message, byte[][] key) {
+        this.message = message;
+        this.key = key;
+
         setupUi();
     }
 
-    public void main() {}
+    public void main() {
+    }
 
     private void setupUi() {
         setTitle("Analyse Encryption Process");
@@ -29,6 +41,14 @@ public class AnalyseDialog extends JFrame {
         setContentPane(panel);
         pack();
         setVisible(true);
+
+        // Initial Round
+        encryption0ParamMessageGrid.setData(message);
+        encryption0ParamCipherGrid.setData(key);
+        encryption0AddMessageGrid.setData(message);
+        encryption0AddCipherGrid.setData(key);
+        AesLib.addRoundKey(message, key);
+        encryption0ResultMessageGrid.setData(message);
     }
 
     private void createUIComponents() {

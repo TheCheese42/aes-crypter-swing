@@ -13,6 +13,7 @@ public class HexGrid extends JTable implements TableModelListener {
     };
     private boolean initialized = false;
     private boolean changeIsInternal = true; // Don't handle table events when changed in code
+    private boolean editingEnabled = false;
 
     public void resizeRows(ComponentEvent _event) {
         setRowHeight(getHeight());
@@ -43,6 +44,19 @@ public class HexGrid extends JTable implements TableModelListener {
     
     public byte[][] getData() {
         return data;
+    }
+
+    public void setEditingEnabled(boolean editingEnabled) {
+        this.editingEnabled = editingEnabled;
+    }
+
+    public boolean isEditingEnabled() {
+        return editingEnabled;
+    }
+
+    @Override
+    public boolean isCellEditable(int _row, int _column) {
+        return editingEnabled;
     }
     
     private void updateUi() {

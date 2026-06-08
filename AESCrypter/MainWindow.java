@@ -35,6 +35,7 @@ public class MainWindow extends JFrame {
         messageTable.getModel().addTableModelListener(_event -> updateMessageField());
         generateButton.addActionListener(_event -> generateKey());
         encryptButton.addActionListener(_event -> encryptMessage());
+        analyseButton.addActionListener(_event -> openAnalysisDialog());
     }
 
     private void updateMessageTable() {
@@ -95,9 +96,16 @@ public class MainWindow extends JFrame {
         encryptedField.setText(encryptedText);
     }
 
+    private void openAnalysisDialog() {
+        AnalyseDialog dialog = new AnalyseDialog(messageTable.getData(), keyTable.getData());
+    }
+
     private void createUIComponents() {
         messageTable = new HexGrid();
+        messageTable.setEditingEnabled(true);
         keyTable = new HexGrid();
+        keyTable.setEditingEnabled(true);
         encryptedTable = new HexGrid();
+        encryptedTable.setEditingEnabled(true);
     }
 }
