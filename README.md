@@ -1,5 +1,8 @@
 # Rijndael Crypter
 
+> Note: This project is currently unfinished. The detailed analysis has not been added yet.
+> If this note is still present after 06/11/2026, we probably forgot to remove it.
+
 Graphical AES en- and decrypter written using Java and Swing.
 
 ## Functionality
