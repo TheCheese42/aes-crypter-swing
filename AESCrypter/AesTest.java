@@ -6,7 +6,17 @@ public class AesTest {
 
     public AesTest() {
         System.out.print('\u000c');
-
+        AesLib.decrypt(s2b(new String[][]{
+            {"32", "88", "31", "e0"},
+            {"43", "5a", "31", "37"},
+            {"f6", "30", "98", "07"},
+            {"a8", "8d", "a2", "34"},
+        }), s2b(new String[][]{
+            {"2b", "28", "ab", "09"},
+            {"7e", "ae", "f7", "cf"},
+            {"15", "d2", "15", "4f"},
+            {"16", "a6", "88", "3c"},
+        }));
         byte[][] matrix;
 
         System.out.print("Testing SubBytes: ");
@@ -104,6 +114,7 @@ public class AesTest {
             {"84", "09", "85", "0b"},
             {"1d", "fb", "97", "32"},
         })));
+        
     }
 
     public static byte[][] s2b(String[][] matrix) {
@@ -117,7 +128,7 @@ public class AesTest {
         return newMatrix;
     }
 
-    public static void printStringMatrix(String[][] matrix) {
+    public static void printByteMatrix(byte[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 System.out.print(matrix[i][j] + ",");
