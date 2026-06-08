@@ -11,6 +11,7 @@ public class MainWindow extends JFrame {
     private HexGrid messageTable;
     private HexGrid keyTable;
     private HexGrid encryptedTable;
+    private JButton decryptButton;
 
     private final Random random = new Random();
 
@@ -36,6 +37,7 @@ public class MainWindow extends JFrame {
         generateButton.addActionListener(_event -> generateKey());
         encryptButton.addActionListener(_event -> encryptMessage());
         analyseButton.addActionListener(_event -> openAnalysisDialog());
+        decryptButton.addActionListener(_event -> decryptMessage());
     }
 
     private void updateMessageTable() {
@@ -96,8 +98,22 @@ public class MainWindow extends JFrame {
         encryptedField.setText(encryptedText);
     }
 
+    private void decryptMessage() {
+        byte[][] data = encryptedTable.getData();
+        byte[][] key = keyTable.getData();
+        byte[][] decrypted = AesLib.decrypt(data, key);
+        messageTable.setData(decrypted);
+        byte[] decryptedText = new byte[16];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                decryptedText[i * 4 + j] = decrypted[i][j];
+            }
+        }
+        messageField.setText(new String(decryptedText));
+    }
+
     private void openAnalysisDialog() {
-        AnalyseDialog dialog = new AnalyseDialog(messageTable.getData(), keyTable.getData());
+        new AnalyseDialog(messageTable.getData(), keyTable.getData());
     }
 
     private void createUIComponents() {
