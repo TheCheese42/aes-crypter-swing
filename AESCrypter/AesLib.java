@@ -1,4 +1,6 @@
+
 public class AesLib {
+    // Constant Matrix that is used in getSboxValue.
     static String[][] SBOX = new String[][]{
         {"63", "7c", "77", "7b", "f2", "6b", "6f", "c5", "30", "01", "67", "2b", "fe", "d7", "ab", "76"},
         {"ca", "82", "c9", "7d", "fa", "59", "47", "f0", "ad", "d4", "a2", "af", "9c", "a4", "72", "c0"},
@@ -17,7 +19,7 @@ public class AesLib {
         {"e1", "f8", "98", "11", "69", "d9", "8e", "94", "9b", "1e", "87", "e9", "ce", "55", "28", "df"},
         {"8c", "a1", "89", "0d", "bf", "e6", "42", "68", "41", "99", "2d", "0f", "b0", "54", "bb", "16"},
     };
-
+    // Constant Matrix that is used in getInverseSboxValue.
     static String[][] INVERSE_SBOX = new String[][]{
 
         {"52", "09", "6A", "D5", "30", "36", "A5", "38", "BF", "40", "A3", "9E", "81", "F3", "D7", "FB"},
@@ -37,7 +39,7 @@ public class AesLib {
         {"A0", "E0", "3B", "4D", "AE", "2A", "F5", "B0", "C8", "EB", "BB", "3C", "83", "53", "99", "61"},
         {"17", "2B", "04", "7E", "BA", "77", "D6", "26", "E1", "69", "14", "63", "55", "21", "0C", "7D"}
     };
-
+    // Lookup tables used for Galois Multiplication in mixColumns and InverseMixColumns.
     static int[][] GALOIS_MULTIPLICATION_LOOKUP_TABLES = new int[][]{
         {},
         { // 1
@@ -167,21 +169,23 @@ public class AesLib {
             0xd7, 0xd9, 0xcb, 0xc5, 0xef, 0xe1, 0xf3, 0xfd, 0xa7, 0xa9, 0xbb, 0xb5, 0x9f, 0x91, 0x83, 0x8d,
         }
     };
-
+    // Constant Matrix that is used for Galois Multiplication,
+    // in mixColumns.
     static int[][] GALOIS_FIELD = new int[][]{
         {2, 3, 1, 1},
         {1, 2, 3, 1},
         {1, 1, 2, 3},
         {3, 1, 1, 2},
     };
-
+    // Constant Matrix that is used for Galois Multiplication,
+    // in InverseMixColumns.
     static int[][] INVERSE_GALOIS_FIELD = new int[][]{
         {14, 11, 13, 9},
         {9, 14, 11, 13},
         {13, 9, 14, 11},
         {11, 13, 9, 14},
     };
-
+    // Constant Matrix used for generateRoundKey.
     static int[][] RCON = new int[][]{
         {1, 2, 4, 8, 16, 32, 64, 128, 27, 54},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -190,18 +194,27 @@ public class AesLib {
     };
 
     private static byte getSBoxValue(byte hex) {
+        // Takes hex number as byte, appoints x and y values to byte,
+        // substitutes byte for a byte matching x and y coordinates in the SBOX,
+        // returns this substituted byte.
         int x = Math.floorMod(hex >> 4, 16);
         int y = hex & 15;
         return (byte) Integer.parseInt(SBOX[x][y], 16);
     }
 
     private static byte getInverseSBoxValue(byte hex) {
+        // Takes hex number as byte, appoints x and y values to byte 
+        // substitutes byte for a byte matching x and y coordinates in the INVERSE_SBOX,
+        // returns this substituted byte.
         int x = Math.floorMod(hex >> 4, 16);
         int y = hex & 15;
         return (byte) Integer.parseInt(INVERSE_SBOX[x][y], 16);
     }
 
     private static byte[] rotWord(byte[] arr, int times) {
+        // Takes a byte array,
+        // moves every array element one to the right by index,
+        // and returns byte array after rotation.
         if (times == 0) {
             return arr;
         }
@@ -209,6 +222,9 @@ public class AesLib {
     }
 
     private static byte[] inverseRotWord(byte[] arr, int times) {
+        // Takes a byte array,
+        // moves every array element one to the left by index,
+        // and returns byte array after rotation.
         if (times == 0) {
             return arr;
         }
@@ -216,6 +232,10 @@ public class AesLib {
     }
 
     private static void galoisMultiply(int[] column, int[][] galoisField) {
+        // Uses the GALOIS_MULTIPLICATION_LOOKUP_TABLES 
+        // to multiply int array by a given galois Field.
+        // Column parameter is taken from dividing 
+        // a two-dimensional array into columns.
         int[] original = column.clone();
         for (int i = 0; i < 4; i++) {
             column[i] = (
@@ -228,6 +248,8 @@ public class AesLib {
     }
 
     public static void subBytes(byte[][] matrix) {
+        // Uses getSboxValue function to substitute all bytes
+        // in a two-dimensional byte array.
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 matrix[i][j] = getSBoxValue(matrix[i][j]);
@@ -236,6 +258,8 @@ public class AesLib {
     }
 
     public static void inverseSubBytes(byte[][] matrix) {
+        // Uses getInverseSboxValue function to substitute all bytes
+        // in a two-dimensional byte array.
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 matrix[i][j] = getInverseSBoxValue(matrix[i][j]);
@@ -244,6 +268,7 @@ public class AesLib {
     }
 
     public static void shiftRows(byte[][] matrix) {
+        // Uses rotWord to shift each row in a two-dimensional byte array by an increasing amount.
         for (int i = 0; i < 4; i++) {
             byte[] row = matrix[i];
             matrix[i] = rotWord(row, i);
@@ -251,6 +276,7 @@ public class AesLib {
     }
 
     public static void inverseShiftRows(byte[][] matrix) {
+        // Uses inverseRotWord to shift each row in a two-dimensional byte array by an increasing amount.
         for (int i = 0; i < 4; i++) {
             byte[] row = matrix[i];
             matrix[i] = inverseRotWord(row, i);
@@ -258,6 +284,8 @@ public class AesLib {
     }
 
     public static void mixColumns(byte[][] matrix) {
+        // Uses galois multiplication to multiply 
+        // two-dimensional byte arrays with GALOIS_FIELD.
         for (int i = 0; i < 4; i++) {
             int[] column = {
                 Math.floorMod(matrix[0][i], 256),
@@ -274,6 +302,8 @@ public class AesLib {
     }
 
     public static void inverseMixColumns(byte[][] matrix) {
+        // Uses galois multiplication to multiply 
+        // two-dimensional byte arrays with INVERSE_GALOIS_FIELD.
         for (int i = 0; i < 4; i++) {
             int[] column = {
                 Math.floorMod(matrix[0][i], 256),
@@ -290,6 +320,8 @@ public class AesLib {
     }
 
     public static void addRoundKey(byte[][] matrix, byte[][] key) {
+        // A Key is added to a 
+        // two-dimensional byte array using XOR.
         for (int i = 0; i < 4; i++) {
             int[] columnMatrix = {
                 matrix[0][i],
@@ -311,6 +343,8 @@ public class AesLib {
     }
 
     public static byte[][] generateRoundKey(byte[][] key, int round) {
+        // A roundKey is generated using the AES Key Schedule.
+        // Round parameter is used to get the correct element of RCON for each round.
         byte[] column1 = {
             key[0][0],
             key[1][0],
@@ -371,6 +405,8 @@ public class AesLib {
     }
 
     public static byte[][] encrypt(byte[][] message, byte[][] key) {
+        // Uses previously defined methods to encrypt a message
+        // Following the AES Encryption Schedule
         byte[][] encrypted = new byte[4][4];
         for (int i = 0; i < message.length; i++) encrypted[i] = message[i].clone();
 
@@ -387,6 +423,8 @@ public class AesLib {
     }
 
     public static byte[][] decrypt(byte[][] message, byte[][] cipherKey) {
+        // Uses previously defined methods to decrypt a message
+        // Following the AES Encryption Schedule
         byte[][] decrypted = new byte[4][4];
         for (int i = 0; i < message.length; i++) decrypted[i] = message[i].clone();
 
