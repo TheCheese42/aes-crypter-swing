@@ -679,6 +679,126 @@
             </properties>
             <border type="none"/>
             <children>
+              <grid id="ba47f" layout-manager="GridBagLayout">
+                <constraints>
+                  <tabbedpane title="Cipher Key"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <vspacer id="41a63">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="a8bf2">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="1.0"/>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="e24e0">
+                    <constraints>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="a6969">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <component id="e0d1d" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <font size="16"/>
+                      <text value="Cipher Key"/>
+                    </properties>
+                  </component>
+                  <grid id="58e80" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="1.0" weighty="0.0"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="85fef" class="HexGrid" binding="key0KeyGrid">
+                        <constraints border-constraint="Center"/>
+                        <properties>
+                          <focusable value="false"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <hspacer id="98790">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="55456">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="bb7d6">
+                    <constraints>
+                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <vspacer id="c06c5">
+                    <constraints>
+                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <hspacer id="d307e">
+                    <constraints>
+                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="17880">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="37952">
+                    <constraints>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <vspacer id="ade2d">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <component id="d9ca9" class="javax.swing.JTextPane" binding="thisTheCipherKeyTextPane" default-binding="true">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="50"/>
+                      </grid>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <focusable value="false"/>
+                      <margin top="5" left="5" bottom="5" right="5"/>
+                      <text value="This the cipher key we start with. It serves as the base for all of the upcoming round keys and is also used in the initial round of the encryption process."/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
               <grid id="ee660" layout-manager="GridBagLayout">
                 <constraints>
                   <tabbedpane title="Result"/>
