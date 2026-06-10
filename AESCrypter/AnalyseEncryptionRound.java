@@ -379,7 +379,7 @@ public class AnalyseEncryptionRound extends JPanel {
         toPerformTheSubBytesTextPane.setEditable(false);
         toPerformTheSubBytesTextPane.setFocusable(false);
         toPerformTheSubBytesTextPane.setMargin(new Insets(5, 5, 5, 5));
-        toPerformTheSubBytesTextPane.setText("To perform the SubBytes transformation, each byte in our message has to be replaced individually.\n\nTake the first of the two hex digits as the row index, the second as the column index and look up the corresponding value in the Rijndael S-box. Use that as replacement for the original hex value.");
+        toPerformTheSubBytesTextPane.setText("To perform the SubBytes transformation, each byte in our message has to be replaced individually.\n\nTake the first of the two hex digits as the row index, the second as the column index and look up the corresponding value in the Rijndael S-box. Use that to replace the original hex value.");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 2;

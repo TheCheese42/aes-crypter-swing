@@ -166,7 +166,7 @@ public class AnalyseDialog extends JFrame {
         thisIsTheMessageTextPane.setEnabled(true);
         thisIsTheMessageTextPane.setFocusable(false);
         thisIsTheMessageTextPane.setMargin(new Insets(5, 5, 5, 5));
-        thisIsTheMessageTextPane.setText("This is the message to be encrypted. We haven't done anything with it, yet.");
+        thisIsTheMessageTextPane.setText("This is the message to be encrypted. We haven't done anything with it yet.");
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
         gbc.gridy = 1;
@@ -177,7 +177,7 @@ public class AnalyseDialog extends JFrame {
         thisIsOurCipherTextPane.setEditable(false);
         thisIsOurCipherTextPane.setFocusable(false);
         thisIsOurCipherTextPane.setMargin(new Insets(5, 5, 5, 5));
-        thisIsOurCipherTextPane.setText("This is our Cipher Key. We will now use it on our Message in the 'AddRoundKey' procedure.");
+        thisIsOurCipherTextPane.setText("This is our Cipher Key. We will now use it to encrypt our Message in the 'AddRoundKey' procedure.");
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
         gbc.gridy = 3;

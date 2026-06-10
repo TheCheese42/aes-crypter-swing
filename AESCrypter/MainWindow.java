@@ -16,6 +16,7 @@ public class MainWindow extends JFrame {
     private HexGrid keyTable;
     private HexGrid encryptedTable;
     private JButton decryptButton;
+    private JButton quitButton;
 
     private final Random random = new Random();
 
@@ -44,6 +45,7 @@ public class MainWindow extends JFrame {
         encryptButton.addActionListener(_event -> encryptMessage());
         analyseButton.addActionListener(_event -> openAnalysisDialog());
         decryptButton.addActionListener(_event -> decryptMessage());
+        quitButton.addActionListener(_event -> dispose());
     }
 
     private void updateMessageTable() {
@@ -150,12 +152,6 @@ public class MainWindow extends JFrame {
         panel.setLayout(new BorderLayout(0, 0));
         panel.setMinimumSize(new Dimension(1000, 450));
         panel.setPreferredSize(new Dimension(1000, 450));
-        final JLabel label1 = new JLabel();
-        Font label1Font = this.$$$getFont$$$(null, -1, 36, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
-        label1.setHorizontalAlignment(0);
-        label1.setText("Rijndael Encryptor");
-        panel.add(label1, BorderLayout.NORTH);
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
         panel.add(panel1, BorderLayout.CENTER);
@@ -221,12 +217,12 @@ public class MainWindow extends JFrame {
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.BOTH;
         panel2.add(panel3, gbc);
-        final JLabel label2 = new JLabel();
-        Font label2Font = this.$$$getFont$$$(null, -1, 26, label2.getFont());
-        if (label2Font != null) label2.setFont(label2Font);
-        label2.setHorizontalAlignment(0);
-        label2.setText("↔");
-        panel3.add(label2, BorderLayout.CENTER);
+        final JLabel label1 = new JLabel();
+        Font label1Font = this.$$$getFont$$$(null, -1, 26, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
+        label1.setHorizontalAlignment(0);
+        label1.setText("↔");
+        panel3.add(label1, BorderLayout.CENTER);
         analyseButton = new JButton();
         analyseButton.setText("Analyse");
         gbc = new GridBagConstraints();
@@ -275,15 +271,15 @@ public class MainWindow extends JFrame {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel4, gbc);
-        final JLabel label3 = new JLabel();
-        label3.setText("Message: ");
-        panel4.add(label3, BorderLayout.WEST);
+        final JLabel label2 = new JLabel();
+        label2.setText("Message: ");
+        panel4.add(label2, BorderLayout.WEST);
         messageField = new JTextField();
         panel4.add(messageField, BorderLayout.CENTER);
-        final JLabel label4 = new JLabel();
-        label4.setHorizontalAlignment(0);
-        label4.setText("Press ENTER to confirm.");
-        panel4.add(label4, BorderLayout.SOUTH);
+        final JLabel label3 = new JLabel();
+        label3.setHorizontalAlignment(0);
+        label3.setText("Press ENTER to confirm.");
+        panel4.add(label3, BorderLayout.SOUTH);
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new BorderLayout(0, 0));
         gbc = new GridBagConstraints();
@@ -291,9 +287,9 @@ public class MainWindow extends JFrame {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel5, gbc);
-        final JLabel label5 = new JLabel();
-        label5.setText("Key: ");
-        panel5.add(label5, BorderLayout.WEST);
+        final JLabel label4 = new JLabel();
+        label4.setText("Key: ");
+        panel5.add(label4, BorderLayout.WEST);
         generateButton = new JButton();
         generateButton.setText("Generate");
         panel5.add(generateButton, BorderLayout.CENTER);
@@ -304,15 +300,15 @@ public class MainWindow extends JFrame {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel6, gbc);
-        final JLabel label6 = new JLabel();
-        label6.setText("Encrypted (HEX): ");
-        panel6.add(label6, BorderLayout.WEST);
+        final JLabel label5 = new JLabel();
+        label5.setText("Encrypted (HEX): ");
+        panel6.add(label5, BorderLayout.WEST);
         encryptedField = new JTextField();
         panel6.add(encryptedField, BorderLayout.CENTER);
-        final JLabel label7 = new JLabel();
-        label7.setHorizontalAlignment(0);
-        label7.setText("Press ENTER to confirm.");
-        panel6.add(label7, BorderLayout.SOUTH);
+        final JLabel label6 = new JLabel();
+        label6.setHorizontalAlignment(0);
+        label6.setText("Press ENTER to confirm.");
+        panel6.add(label6, BorderLayout.SOUTH);
         final JPanel spacer11 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -357,6 +353,57 @@ public class MainWindow extends JFrame {
         Font encryptedTableFont = this.$$$getFont$$$(null, -1, 36, encryptedTable.getFont());
         if (encryptedTableFont != null) encryptedTable.setFont(encryptedTableFont);
         panel9.add(encryptedTable, BorderLayout.CENTER);
+        final JPanel panel10 = new JPanel();
+        panel10.setLayout(new BorderLayout(0, 0));
+        panel.add(panel10, BorderLayout.NORTH);
+        final JLabel label7 = new JLabel();
+        Font label7Font = this.$$$getFont$$$(null, -1, 36, label7.getFont());
+        if (label7Font != null) label7.setFont(label7Font);
+        label7.setHorizontalAlignment(0);
+        label7.setText("Rijndael Encrypter");
+        panel10.add(label7, BorderLayout.CENTER);
+        final JPanel panel11 = new JPanel();
+        panel11.setLayout(new BorderLayout(0, 0));
+        panel11.setMinimumSize(new Dimension(102, 0));
+        panel11.setPreferredSize(new Dimension(102, 0));
+        panel10.add(panel11, BorderLayout.WEST);
+        final JPanel panel12 = new JPanel();
+        panel12.setLayout(new GridBagLayout());
+        panel10.add(panel12, BorderLayout.EAST);
+        quitButton = new JButton();
+        quitButton.setMaximumSize(new Dimension(80, 30));
+        quitButton.setMinimumSize(new Dimension(80, 30));
+        quitButton.setPreferredSize(new Dimension(80, 30));
+        quitButton.setText("Quit");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel12.add(quitButton, gbc);
+        final JPanel spacer13 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel12.add(spacer13, gbc);
+        final JPanel spacer14 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel12.add(spacer14, gbc);
+        final JPanel spacer15 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel12.add(spacer15, gbc);
+        final JPanel spacer16 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel12.add(spacer16, gbc);
     }
 
     /**

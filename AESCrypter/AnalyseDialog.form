@@ -130,7 +130,7 @@
                           <enabled value="true"/>
                           <focusable value="false"/>
                           <margin top="5" left="5" bottom="5" right="5"/>
-                          <text value="This is the message to be encrypted. We haven't done anything with it, yet."/>
+                          <text value="This is the message to be encrypted. We haven't done anything with it yet."/>
                         </properties>
                       </component>
                       <component id="268f5" class="javax.swing.JTextPane" binding="thisIsOurCipherTextPane" default-binding="true">
@@ -144,7 +144,7 @@
                           <editable value="false"/>
                           <focusable value="false"/>
                           <margin top="5" left="5" bottom="5" right="5"/>
-                          <text value="This is our Cipher Key. We will now use it on our Message in the 'AddRoundKey' procedure."/>
+                          <text value="This is our Cipher Key. We will now use it to encrypt our Message in the 'AddRoundKey' procedure."/>
                         </properties>
                       </component>
                       <vspacer id="673f6">

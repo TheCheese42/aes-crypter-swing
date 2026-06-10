@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AnalyseEncryptionRound">
   <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="633" height="858"/>
+      <xy x="20" y="20" width="633" height="892"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -334,7 +334,7 @@
                   <editable value="false"/>
                   <focusable value="false"/>
                   <margin top="5" left="5" bottom="5" right="5"/>
-                  <text value="To perform the SubBytes transformation, each byte in our message has to be replaced individually.&#10;&#10;Take the first of the two hex digits as the row index, the second as the column index and look up the corresponding value in the Rijndael S-box. Use that as replacement for the original hex value."/>
+                  <text value="To perform the SubBytes transformation, each byte in our message has to be replaced individually.&#10;&#10;Take the first of the two hex digits as the row index, the second as the column index and look up the corresponding value in the Rijndael S-box. Use that to replace the original hex value."/>
                 </properties>
               </component>
               <hspacer id="d9288">

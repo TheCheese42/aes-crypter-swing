@@ -10,14 +10,6 @@
     </properties>
     <border type="none"/>
     <children>
-      <component id="634f0" class="javax.swing.JLabel">
-        <constraints border-constraint="North"/>
-        <properties>
-          <font size="36"/>
-          <horizontalAlignment value="0"/>
-          <text value="Rijndael Encryptor"/>
-        </properties>
-      </component>
       <grid id="f7599" layout-manager="GridBagLayout">
         <constraints border-constraint="Center"/>
         <properties/>
@@ -273,6 +265,73 @@
                   <font size="36"/>
                 </properties>
               </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="b9c1c" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="fc40a" class="javax.swing.JLabel">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <font size="36"/>
+              <horizontalAlignment value="0"/>
+              <text value="Rijndael Encrypter"/>
+            </properties>
+          </component>
+          <grid id="ee825" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="West"/>
+            <properties>
+              <minimumSize width="102" height="0"/>
+              <preferredSize width="102" height="0"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="f7870" layout-manager="GridBagLayout">
+            <constraints border-constraint="East"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="82bfc" class="javax.swing.JButton" binding="quitButton" default-binding="true">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <maximumSize width="80" height="30"/>
+                  <minimumSize width="80" height="30"/>
+                  <preferredSize width="80" height="30"/>
+                  <text value="Quit"/>
+                </properties>
+              </component>
+              <hspacer id="72beb">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </hspacer>
+              <vspacer id="20dd3">
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </vspacer>
+              <hspacer id="7b341">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </hspacer>
+              <vspacer id="cfe15">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </vspacer>
             </children>
           </grid>
         </children>
