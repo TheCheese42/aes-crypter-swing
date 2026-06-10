@@ -49,7 +49,10 @@ public class HexGrid extends JTable implements TableModelListener {
     }
     
     public byte[][] getData() {
-        return data;
+        // Returns a deep copy of the underlying byte array
+        byte[][] clone = new byte[4][4];
+        for (int i = 0; i < 4; i++) clone[i] = data[i].clone();
+        return clone;
     }
 
     public void setEditingEnabled(boolean editingEnabled) {
