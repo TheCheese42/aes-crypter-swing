@@ -19,15 +19,19 @@ public class AnalyseKeyRound extends JPanel {
         this.roundIdx = roundIdx;
 
         $$$setupUI$$$();
+        // Required to actually show the contents
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
 
+        // Populate key table
         prevKeyGrid.setData(key);
     }
 
     private void createUIComponents() {
+        // Populate Sbox table
         sboxTable = new JTable(new DefaultTableModel(AesLib.SBOX, new String[16]));
         sboxTable.addComponentListener(new TableFillYListener(sboxTable));
+        // Populate Rcon column table with corresponding hex values
         Object[][] rconColData = new Object[][]{
             {Integer.toHexString(AesLib.RCON[0][roundIdx])},
             {Integer.toHexString(AesLib.RCON[1][roundIdx])},
@@ -35,7 +39,9 @@ public class AnalyseKeyRound extends JPanel {
             {Integer.toHexString(AesLib.RCON[3][roundIdx])},
         };
         rconColTable = new JTable(new DefaultTableModel(rconColData, new String[1]));
+        // Automatically stretch vertically
         rconColTable.addComponentListener(new TableFillYListener(rconColTable));
+        // Center table column
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         rconColTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);

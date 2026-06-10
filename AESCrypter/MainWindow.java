@@ -32,8 +32,8 @@ public class MainWindow extends JFrame {
     }
 
     private void setupUi() {
-        setTitle("Rijndael Encryptor");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Rijndael Encrypter");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(panel);
         pack();
         setVisible(true);
@@ -49,18 +49,21 @@ public class MainWindow extends JFrame {
     }
 
     private void updateMessageTable() {
+        // Update hex matrix when input field was changed
         String message = messageField.getText();
         if (message.length() > 16) messageField.setText(message.substring(0, 16));
         updateTable(messageTable, messageField.getText());
     }
 
     private void updateEncryptedTable() {
+        // Update hex matrix when input field was changed
         String message = encryptedField.getText();
         if (message.length() > 16) encryptedField.setText(message.substring(0, 16));
         updateTable(encryptedTable, encryptedField.getText());
     }
 
     private void updateMessageField() {
+        // Update input field when hex matrix was changed
         byte[][] data = messageTable.getData();
         char[] text = new char[16];
         for (int i = 0; i < 4; i++) {
@@ -72,6 +75,7 @@ public class MainWindow extends JFrame {
     }
 
     private boolean updateTable(HexGrid table, String textContent) {
+        // Update hex data of any HexGrid instance with a plain text string
         // Returns true if updating succeeded and false otherwise (e.g. too many characters)
         if (textContent.length() > 16) return false;
         byte[] byteContent = new byte[16];
@@ -83,6 +87,8 @@ public class MainWindow extends JFrame {
     }
 
     private boolean updateTable(HexGrid table, byte[] byteContent) {
+        // Update hex data of any HexGrid instance with a byte array
+        // Returns true if updating succeeded and false otherwise (e.g. too many characters)
         if (byteContent.length > 16) return false;
         table.setData(new byte[][]{
             {byteContent[0], byteContent[1], byteContent[2], byteContent[3]},
@@ -94,6 +100,8 @@ public class MainWindow extends JFrame {
     }
 
     private void generateKey() {
+        // Pseudo-randomly generate a new cipher key
+        // Not cryptographically secure!
         random.nextBytes(key);
         updateTable(keyTable, key);
     }

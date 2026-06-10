@@ -36,9 +36,11 @@ public class AnalyseEncryptionRound extends JPanel {
 
     AnalyseEncryptionRound(byte[][] message, byte[][] key, boolean isFinalRound) {
         $$$setupUI$$$();
+        // Required to actually show the contents
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
 
+        // Double click to open MixColumns Wikipedia page...
         mixMessageTextPane.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent event) {
@@ -52,6 +54,7 @@ public class AnalyseEncryptionRound extends JPanel {
                     } else {
                         Runtime runtime = Runtime.getRuntime();
                         try {
+                            // Linux fallback
                             runtime.exec(new String[]{"xdg-open", url});
                         } catch (IOException _e) {
                         }
@@ -60,6 +63,7 @@ public class AnalyseEncryptionRound extends JPanel {
             }
         });
 
+        // Populate tables
         encryption1ParamMessageGrid.setData(message);
         encryption1ParamKeyGrid.setData(key);
         encryption1SubMessageGrid.setData(message);
@@ -67,6 +71,7 @@ public class AnalyseEncryptionRound extends JPanel {
         encryption1ShiftMessageGrid.setData(message);
         AesLib.shiftRows(message);
         if (!isFinalRound) {
+            // No MixColumns in final round
             encryption1MixMessageGrid.setData(message);
             encryption1MixGaloisGrid.setData(AesLib.GALOIS_FIELD);
             AesLib.mixColumns(message);
@@ -80,6 +85,7 @@ public class AnalyseEncryptionRound extends JPanel {
     }
 
     private void createUIComponents() {
+        // Populate Sbox table
         encryption1SubSboxTable = new JTable(new DefaultTableModel(AesLib.SBOX, new String[16]));
         encryption1SubSboxTable.addComponentListener(new TableFillYListener(encryption1SubSboxTable));
     }

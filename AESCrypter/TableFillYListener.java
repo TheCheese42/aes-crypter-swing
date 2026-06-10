@@ -3,6 +3,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 public class TableFillYListener implements ComponentListener {
+    // Listens to resize events and stretches the table accordingly
+    // to take the whole vertical space.
     JTable table;
 
     public TableFillYListener(JTable table) {
@@ -13,6 +15,7 @@ public class TableFillYListener implements ComponentListener {
         table.setRowHeight(table.getHeight() / table.getRowCount());
     }
 
+    // Other methods to fully implement the interface
     public void componentMoved(ComponentEvent componentEvent) {}
 
     public void componentShown(ComponentEvent componentEvent) {}

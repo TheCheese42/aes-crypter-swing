@@ -16,13 +16,16 @@ public class HexGrid extends JTable implements TableModelListener {
     private boolean editingEnabled = false;
 
     public HexGrid() {
+        // Initialize 4x4 table
         super(
             new DefaultTableModel(
                 new Object[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}},
                 new String[]{"", "", "", ""})
         );
 
+        // Stretch vertically
         addComponentListener(new TableFillYListener(this));
+        // Center all column texts
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
@@ -40,6 +43,7 @@ public class HexGrid extends JTable implements TableModelListener {
     }
 
     public void setData(int[][] data) {
+        // Alternative setData that takes an integer matrix
         byte[][] converted = new byte[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
