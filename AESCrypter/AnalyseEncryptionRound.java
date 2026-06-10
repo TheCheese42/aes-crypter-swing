@@ -252,7 +252,7 @@ public class AnalyseEncryptionRound extends JPanel {
         whileNotOurOriginalTextPane.setEditable(false);
         whileNotOurOriginalTextPane.setFocusable(false);
         whileNotOurOriginalTextPane.setMargin(new Insets(5, 5, 5, 5));
-        whileNotOurOriginalTextPane.setText("While not our original message anymore, we need to continue iteratively processing our message a total of 10 times.\n\nSince the first 9 rounds are identical, only the values will change from now on, until the final round.");
+        whileNotOurOriginalTextPane.setText("While not our original message anymore, we need to continue iteratively processing our message a total of 10 times.\n\nSince all 10 rounds are mostly identical (the last one is missing MixColumns), only the table values will change from now on.");
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
         gbc.gridy = 1;
@@ -263,7 +263,7 @@ public class AnalyseEncryptionRound extends JPanel {
         weWonTBeTextPane.setEditable(false);
         weWonTBeTextPane.setFocusable(false);
         weWonTBeTextPane.setMargin(new Insets(5, 5, 5, 5));
-        weWonTBeTextPane.setText("We won't be directly using our cipher key anymore. \n\nInstead, every round has its own key, which is generated in the 'Key Schedule' tab of the corresponding round.");
+        weWonTBeTextPane.setText("We won't be using the cipher key directly anymore. \n\nInstead, every round has its own round key, which is generated in the 'Key Schedule' tab of the corresponding round.");
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
         gbc.gridy = 3;
@@ -314,7 +314,7 @@ public class AnalyseEncryptionRound extends JPanel {
         final JLabel label4 = new JLabel();
         Font label4Font = this.$$$getFont$$$(null, -1, 16, label4.getFont());
         if (label4Font != null) label4.setFont(label4Font);
-        label4.setText("Label");
+        label4.setText("Rijndael S-box");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 0;

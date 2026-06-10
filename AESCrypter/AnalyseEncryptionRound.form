@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AnalyseEncryptionRound">
   <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="633" height="824"/>
+      <xy x="20" y="20" width="633" height="858"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -186,7 +186,7 @@
                   <editable value="false"/>
                   <focusable value="false"/>
                   <margin top="5" left="5" bottom="5" right="5"/>
-                  <text value="While not our original message anymore, we need to continue iteratively processing our message a total of 10 times.&#10;&#10;Since the first 9 rounds are identical, only the values will change from now on, until the final round."/>
+                  <text value="While not our original message anymore, we need to continue iteratively processing our message a total of 10 times.&#10;&#10;Since all 10 rounds are mostly identical (the last one is missing MixColumns), only the table values will change from now on."/>
                 </properties>
               </component>
               <component id="c1d04" class="javax.swing.JTextPane" binding="weWonTBeTextPane" default-binding="true">
@@ -200,7 +200,7 @@
                   <editable value="false"/>
                   <focusable value="false"/>
                   <margin top="5" left="5" bottom="5" right="5"/>
-                  <text value="We won't be directly using our cipher key anymore. &#10;&#10;Instead, every round has its own key, which is generated in the 'Key Schedule' tab of the corresponding round."/>
+                  <text value="We won't be using the cipher key directly anymore. &#10;&#10;Instead, every round has its own round key, which is generated in the 'Key Schedule' tab of the corresponding round."/>
                 </properties>
               </component>
             </children>
@@ -255,7 +255,7 @@
                     </constraints>
                     <properties>
                       <font size="16"/>
-                      <text value="Label"/>
+                      <text value="Rijndael S-box"/>
                     </properties>
                   </component>
                   <component id="2fba1" class="javax.swing.JTable" binding="encryption1SubSboxTable" custom-create="true">

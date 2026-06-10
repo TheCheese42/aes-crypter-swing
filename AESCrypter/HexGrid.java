@@ -1,8 +1,8 @@
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ComponentEvent;
 
 public class HexGrid extends JTable implements TableModelListener {
     private byte[][] data = {
@@ -17,13 +17,14 @@ public class HexGrid extends JTable implements TableModelListener {
 
     public HexGrid() {
         super(
-            new DefaultTableModel(new Object[][] { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} },
-            new String[] {"", "", "", ""})
+            new DefaultTableModel(
+                new Object[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}},
+                new String[]{"", "", "", ""})
         );
 
         addComponentListener(new TableFillYListener(this));
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
@@ -32,7 +33,7 @@ public class HexGrid extends JTable implements TableModelListener {
         updateUi();
         initialized = true;
     }
-    
+
     public void setData(byte[][] data) {
         this.data = data;
         updateUi();
@@ -47,7 +48,7 @@ public class HexGrid extends JTable implements TableModelListener {
         }
         setData(converted);
     }
-    
+
     public byte[][] getData() {
         // Returns a deep copy of the underlying byte array
         byte[][] clone = new byte[4][4];
@@ -67,7 +68,7 @@ public class HexGrid extends JTable implements TableModelListener {
     public boolean isCellEditable(int _row, int _column) {
         return editingEnabled;
     }
-    
+
     private void updateUi() {
         changeIsInternal = true;
         for (int x = 0; x < 4; x++) {

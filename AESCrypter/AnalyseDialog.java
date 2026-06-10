@@ -8,7 +8,7 @@ public class AnalyseDialog extends JFrame {
     private JPanel panel;
     private JTabbedPane tabbedPane1;
     private JTabbedPane encryptionRoundsPane;
-    private JTabbedPane tabbedPane3;
+    private JTabbedPane keyRoundsPane;
     private JTabbedPane tabbedPane4;
     private HexGrid encryption0ParamMessageGrid;
     private HexGrid encryption0ParamCipherGrid;
@@ -21,6 +21,9 @@ public class AnalyseDialog extends JFrame {
     private HexGrid encryption0ResultMessageGrid;
     private JTextPane thisIsOurMessageTextPane;
     private JTextPane afterPerformingEveryStepTextPane;
+    private JTextPane thisIsTheKeyTextPane;
+    private HexGrid keyFinalKeyGrid;
+    private HexGrid encryptionFinalMessageGrid;
 
     byte[][] message;
     byte[][] key;
@@ -50,10 +53,18 @@ public class AnalyseDialog extends JFrame {
 
         // Setup rounds 1 - 10
         for (int i = 1; i <= 10; i++) {
+            AnalyseKeyRound keyRound = new AnalyseKeyRound(key, i - 1);
+            keyRoundsPane.add(keyRound, i - 1);
+            keyRoundsPane.setTitleAt(i - 1, String.format("Round %d", i));
+            key = AesLib.generateRoundKey(key, i - 1);
             AnalyseEncryptionRound round = new AnalyseEncryptionRound(message, key, i == 10);
             encryptionRoundsPane.add(round, i);
             encryptionRoundsPane.setTitleAt(i, String.format("Round %d", i));
         }
+
+        // Final round
+        keyFinalKeyGrid.setData(key);
+        encryptionFinalMessageGrid.setData(message);
     }
 
     /**
@@ -631,15 +642,118 @@ public class AnalyseDialog extends JFrame {
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         panel9.add(panel10, gbc);
-        final HexGrid hexGrid1 = new HexGrid();
-        hexGrid1.setFocusable(false);
-        panel10.add(hexGrid1, BorderLayout.CENTER);
-        tabbedPane3 = new JTabbedPane();
-        tabbedPane3.setTabPlacement(2);
-        tabbedPane1.addTab("Key Schedule", null, tabbedPane3, "The round keys are generated here.");
+        encryptionFinalMessageGrid = new HexGrid();
+        encryptionFinalMessageGrid.setFocusable(false);
+        panel10.add(encryptionFinalMessageGrid, BorderLayout.CENTER);
+        keyRoundsPane = new JTabbedPane();
+        keyRoundsPane.setTabPlacement(2);
+        tabbedPane1.addTab("Key Schedule", null, keyRoundsPane, "The round keys are generated here.");
         final JPanel panel11 = new JPanel();
-        panel11.setLayout(new BorderLayout(0, 0));
-        tabbedPane3.addTab("Untitled", panel11);
+        panel11.setLayout(new GridBagLayout());
+        keyRoundsPane.addTab("Result", panel11);
+        final JPanel spacer58 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel11.add(spacer58, gbc);
+        final JPanel spacer59 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel11.add(spacer59, gbc);
+        final JPanel spacer60 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel11.add(spacer60, gbc);
+        final JPanel spacer61 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel11.add(spacer61, gbc);
+        final JLabel label8 = new JLabel();
+        Font label8Font = this.$$$getFont$$$(null, -1, 16, label8.getFont());
+        if (label8Font != null) label8.setFont(label8Font);
+        label8.setText("Final Round Key");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(10, 10, 10, 10);
+        panel11.add(label8, gbc);
+        final JPanel panel12 = new JPanel();
+        panel12.setLayout(new BorderLayout(0, 0));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel11.add(panel12, gbc);
+        keyFinalKeyGrid = new HexGrid();
+        keyFinalKeyGrid.setFocusable(false);
+        panel12.add(keyFinalKeyGrid, BorderLayout.CENTER);
+        final JPanel spacer62 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel11.add(spacer62, gbc);
+        final JPanel spacer63 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel11.add(spacer63, gbc);
+        final JPanel spacer64 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel11.add(spacer64, gbc);
+        final JPanel spacer65 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel11.add(spacer65, gbc);
+        final JPanel spacer66 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel11.add(spacer66, gbc);
+        final JPanel spacer67 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel11.add(spacer67, gbc);
+        final JPanel spacer68 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel11.add(spacer68, gbc);
+        final JPanel spacer69 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel11.add(spacer69, gbc);
+        thisIsTheKeyTextPane = new JTextPane();
+        thisIsTheKeyTextPane.setFocusable(false);
+        thisIsTheKeyTextPane.setMargin(new Insets(5, 5, 5, 5));
+        thisIsTheKeyTextPane.setText("This is the key used in the final round of the encryption process.");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel11.add(thisIsTheKeyTextPane, gbc);
     }
 
     /**
