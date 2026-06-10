@@ -12,7 +12,7 @@ Graphical AES en- and decrypter written using Java and Swing.
 
 ## Usage
 
-Being a BlueJ project, download the source code and open the AESCrypter/ directory in BlueJ. Form there, run the MainWindow class to open the Swing interface.
+Being a BlueJ project, download the source code and open the AESCrypter/ directory in BlueJ. From there, run the MainWindow class to open the Swing interface.
 
 ## Disclaimer
 
