@@ -156,6 +156,13 @@
                 <constraints border-constraint="Center"/>
                 <properties/>
               </component>
+              <component id="d880f" class="javax.swing.JLabel">
+                <constraints border-constraint="South"/>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <text value="Press ENTER to confirm."/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="6da4" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -191,12 +198,19 @@
               <component id="dc152" class="javax.swing.JLabel">
                 <constraints border-constraint="West"/>
                 <properties>
-                  <text value="Encrypted: "/>
+                  <text value="Encrypted (HEX): "/>
                 </properties>
               </component>
               <component id="6a749" class="javax.swing.JTextField" binding="encryptedField">
                 <constraints border-constraint="Center"/>
                 <properties/>
+              </component>
+              <component id="52463" class="javax.swing.JLabel">
+                <constraints border-constraint="South"/>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <text value="Press ENTER to confirm."/>
+                </properties>
               </component>
             </children>
           </grid>

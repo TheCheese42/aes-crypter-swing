@@ -38,6 +38,7 @@ public class MainWindow extends JFrame {
         setVisible(true);
 
         messageField.addActionListener(_event -> updateMessageTable());
+        encryptedField.addActionListener(_event -> updateEncryptedTable());
         messageTable.getModel().addTableModelListener(_event -> updateMessageField());
         generateButton.addActionListener(_event -> generateKey());
         encryptButton.addActionListener(_event -> encryptMessage());
@@ -49,6 +50,12 @@ public class MainWindow extends JFrame {
         String message = messageField.getText();
         if (message.length() > 16) messageField.setText(message.substring(0, 16));
         updateTable(messageTable, messageField.getText());
+    }
+
+    private void updateEncryptedTable() {
+        String message = encryptedField.getText();
+        if (message.length() > 16) encryptedField.setText(message.substring(0, 16));
+        updateTable(encryptedTable, encryptedField.getText());
     }
 
     private void updateMessageField() {
@@ -273,6 +280,10 @@ public class MainWindow extends JFrame {
         panel4.add(label3, BorderLayout.WEST);
         messageField = new JTextField();
         panel4.add(messageField, BorderLayout.CENTER);
+        final JLabel label4 = new JLabel();
+        label4.setHorizontalAlignment(0);
+        label4.setText("Press ENTER to confirm.");
+        panel4.add(label4, BorderLayout.SOUTH);
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new BorderLayout(0, 0));
         gbc = new GridBagConstraints();
@@ -280,9 +291,9 @@ public class MainWindow extends JFrame {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel5, gbc);
-        final JLabel label4 = new JLabel();
-        label4.setText("Key: ");
-        panel5.add(label4, BorderLayout.WEST);
+        final JLabel label5 = new JLabel();
+        label5.setText("Key: ");
+        panel5.add(label5, BorderLayout.WEST);
         generateButton = new JButton();
         generateButton.setText("Generate");
         panel5.add(generateButton, BorderLayout.CENTER);
@@ -293,11 +304,15 @@ public class MainWindow extends JFrame {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.BOTH;
         panel1.add(panel6, gbc);
-        final JLabel label5 = new JLabel();
-        label5.setText("Encrypted: ");
-        panel6.add(label5, BorderLayout.WEST);
+        final JLabel label6 = new JLabel();
+        label6.setText("Encrypted (HEX): ");
+        panel6.add(label6, BorderLayout.WEST);
         encryptedField = new JTextField();
         panel6.add(encryptedField, BorderLayout.CENTER);
+        final JLabel label7 = new JLabel();
+        label7.setHorizontalAlignment(0);
+        label7.setText("Press ENTER to confirm.");
+        panel6.add(label7, BorderLayout.SOUTH);
         final JPanel spacer11 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -372,4 +387,5 @@ public class MainWindow extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return panel;
     }
+
 }
