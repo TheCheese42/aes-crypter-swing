@@ -1,8 +1,5 @@
 # Rijndael Crypter
 
-> Note: This project is currently unfinished. The detailed analysis has not been added yet.
-> If this note is still present after 06/11/2026, we probably forgot to remove it.
-
 Graphical AES en- and decrypter written using Java and Swing.
 
 ## Functionality
@@ -11,7 +8,7 @@ Graphical AES en- and decrypter written using Java and Swing.
 - Allows to set or generate a key (128 bits)
 - Encrypts the given message using the Rijndael Cipher (AES)
 - Also supports decryption of a 4x4 hexadecimal block
-- Grants a detailed insight to the exact steps happening during the encryption process
+- Grants detailed insights to the exact steps happening during the encryption process
 
 ## Usage
 
