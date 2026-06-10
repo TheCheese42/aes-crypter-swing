@@ -15,17 +15,13 @@ public class HexGrid extends JTable implements TableModelListener {
     private boolean changeIsInternal = true; // Don't handle table events when changed in code
     private boolean editingEnabled = false;
 
-    public void resizeRows(ComponentEvent _event) {
-        setRowHeight(getHeight());
-    }
-
     public HexGrid() {
         super(
             new DefaultTableModel(new Object[][] { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} },
             new String[] {"", "", "", ""})
         );
 
-        addComponentListener(new HexGridComponentListener(this));
+        addComponentListener(new TableFillYListener(this));
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
@@ -40,6 +36,16 @@ public class HexGrid extends JTable implements TableModelListener {
     public void setData(byte[][] data) {
         this.data = data;
         updateUi();
+    }
+
+    public void setData(int[][] data) {
+        byte[][] converted = new byte[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                converted[i][j] = (byte) data[i][j];
+            }
+        }
+        setData(converted);
     }
     
     public byte[][] getData() {

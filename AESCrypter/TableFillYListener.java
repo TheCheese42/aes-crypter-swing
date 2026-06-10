@@ -2,14 +2,15 @@ import javax.swing.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-public class HexGridComponentListener implements ComponentListener {
+public class TableFillYListener implements ComponentListener {
     JTable table;
 
-    public HexGridComponentListener(JTable table) {
+    public TableFillYListener(JTable table) {
         this.table = table;
     }
+
     public void componentResized(ComponentEvent componentEvent) {
-        table.setRowHeight(table.getHeight() / 4);
+        table.setRowHeight(table.getHeight() / table.getRowCount());
     }
 
     public void componentMoved(ComponentEvent componentEvent) {}
